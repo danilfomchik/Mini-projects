@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #e5e5e5;
+  display: flex;
+  padding-top: 5rem;
+  justify-content: center;
+  overflow: hidden;
+  margin: 0;
+  background-image: url('http://friendak.com/1112/Windows_vista_1600x1200_wallpaper_4.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.row {
+  display: flex;
+  width: 600px;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.col-header {
+  width: 150px;
+  box-shadow: 4px 4px 9px rgb(198 198 198 / 36%);
+  border-radius: 20px;
+  padding: 1.1rem 1rem;
+  color: #fff;
+  text-align: center;
+}
+
+.item {
+  width: 150px;
+  height: 66px;
+  border: 1px solid #eee;
+  box-shadow: 4px 4px 9px rgba(198, 198, 198, 0.36);
+  border-radius: 20px;
+  background: #f7f6f7;
+  padding: 0.8rem 1rem;
+  color: #828282;
+  text-align: center;
+  cursor: grab;
+}
+
+.item:active {
+  cursor: grabbing;
+}
+
+.placeholder {
+  width: 150px;
+  height: 66px;
+}
+
+.start {
+    background: linear-gradient(90deg, #ff85e4 0%, #229efd 163.25%);
+}
+
+.progress {
+    background: linear-gradient(90deg, #209cff 0%, #68e0cf 77%);
+}
+
+.done {
+    background: linear-gradient(90deg, #68e0cf 31%, rgb(24 255 108) 100%);
+}
+
+.hide{
+    display: none;
+}
+
+.hovered{
+    border-top: 3px solid #1b7e9c;
+}
+
+.active{
+    border: 3px solid #8ed7ed;
+    color: #8ed7ed;
+}
