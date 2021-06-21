@@ -1,7 +1,11 @@
 const slides = document.querySelectorAll('.slide');
 
+function slidesPlugin(activeSlide) {
+    slides[activeSlide].classList.add('active');
+}
+slidesPlugin(1)
 
-function activeElement() {
+function addActiveElement() {
     for (const slide of slides){
         slide.addEventListener('click', function (){
             deactivateActiveTool()
@@ -11,8 +15,7 @@ function activeElement() {
     }
 
 }
-activeElement()
-
+addActiveElement()
 
 function deactivateActiveTool() {
     slides.forEach((slide) => {
