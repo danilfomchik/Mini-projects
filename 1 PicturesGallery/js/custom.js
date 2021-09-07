@@ -7,7 +7,7 @@ slidesPlugin(1)
 
 function addActiveElement() {
     for (const slide of slides){
-        slide.addEventListener('click', function (){
+        slide.addEventListener('mouseover', function (){
             deactivateActiveTool()
 
             this.classList.add('active');
