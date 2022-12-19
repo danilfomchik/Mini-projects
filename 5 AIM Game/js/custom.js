@@ -10,6 +10,10 @@ const closePopUp = document.querySelector('#closePopUp');
 const bluredScreen = document.querySelector('.bluredScreen');
 const nextStep = document.querySelector('#nextStep');
 
+const resultsList = document.querySelector('#results-list');
+const results = [];
+
+
 let time = 0;
 let score = 0;
 const colors = ['orange', 'green', 'blue', 'white', 'yellow', 'violet', 'purple', 'red', 'pink'];
@@ -25,7 +29,7 @@ timeList.addEventListener('click', (event) => {
         time = parseInt(event.target.getAttribute('data-time'));
         screens[1].classList.add('up')
 
-        startGame()
+        startGame(time);
     }
 })
 
@@ -43,7 +47,9 @@ restartBtn.addEventListener('click', (event) => {
     location.reload()
 })
 
+
 let isVisible = false;
+
 resultBtn.addEventListener('click', () => {
     if( !isVisible ){
         board.classList.add('hide');
@@ -60,23 +66,67 @@ resultBtn.addEventListener('click', () => {
 closePopUp.addEventListener('click', () => {
     board.classList.remove('hide');
     nextStep.style.removeProperty('display');
-    finishGame()
 
     resultPopUp.classList.remove('active-result-popup')
     isVisible = false;
 })
 
 
+function renderResults(results) {
+    let resultsArr = JSON.parse(results);
 
-function startGame() {
-    setInterval(decreaseTime, 1000)
-    createRandomCircle()
-    setTime(time)
+    resultsArr.forEach((item, index) => {
+        let resultItem = `
+            <li>${index+1}. ${item.time} seconds - ${item.score} points</li>
+        `;
+
+        resultsList.innerHTML += resultItem;
+    })
+}
+
+
+
+let intervalID = null;
+
+function startGame(time) {
+    intervalID = setInterval(decreaseTime, 500)
+    createRandomCircle();
+    setTime(time);
+
+    localStorage.setItem('time', time);
+
+    if(!localStorage.getItem(`result`)){
+        localStorage.setItem(`result`, JSON.stringify(results));
+    }
+}
+
+function finishGame(time) {
+
+    timeElement.parentNode.classList.add('hide')
+    restartBtn.style.display = 'block';
+    resultBtn.style.display = 'block';
+
+    board.innerHTML = `<h1>You are very good! </br>
+    Your score - <span class="primary">${score}</span></h1>`
+
+    let gameResult = {
+        score,
+        time: localStorage.getItem('time')
+    };
+
+    clearInterval(intervalID);
+
+    setResults(gameResult);
+
+    renderResults(localStorage.getItem('result'));
 }
 
 function decreaseTime() {
+    let totalTime = time;
+
     if(time === 0){
-        finishGame()
+        console.log(totalTime);
+        finishGame(totalTime);
     } else{
         let current = --time;
         if(current < 10){
@@ -91,14 +141,24 @@ function setTime(value) {
     timeElement.innerHTML = `00:${value}`
 }
 
-function finishGame() {
-    timeElement.parentNode.classList.add('hide')
-    restartBtn.style.display = 'block';
-    resultBtn.style.display = 'block';
-
-    board.innerHTML = `<h1>You are very good! </br>
-    Your score - <span class="primary">${score}</span></h1>`
+function createResult(score, time) {
+    return {
+        score,
+        time
+    }
 }
+
+
+function setResults(dataResult) {
+    let resultsArr = JSON.parse(localStorage.getItem('result'));
+
+    resultsArr.push(dataResult)
+
+    console.log(resultsArr);
+
+    localStorage.setItem('result', JSON.stringify(resultsArr));
+}
+
 
 function createRandomCircle() {
     let color = getRandomColor();

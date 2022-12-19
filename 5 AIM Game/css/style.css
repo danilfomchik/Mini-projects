@@ -235,7 +235,12 @@ h1 {
   padding: 5px;
   display: block;
   background-color: #2a333df1;
+  overflow: auto;
 }
+
+/* .active-result-popup h1{
+  position: fixed;
+} */
 
 .resultPopUp p{
   margin: 0 0 0 5px;
